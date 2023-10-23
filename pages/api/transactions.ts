@@ -8,8 +8,14 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Transaction[]>
 ) {
-  const filters = JSON.parse(req.body) as Filters
   const database = await setupDb()
-  const transactions = await selectTransactions(filters)
+  let transactions
+  if (req.method === 'POST') {
+    const filters = JSON.parse(req.body) as Filters
+    transactions = await selectTransactions(filters)
+  } else {
+    transactions = await selectTransactions()
+  }
+
   res.status(200).json(transactions)
 }

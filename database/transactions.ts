@@ -55,7 +55,7 @@ export const selectTransactions = async (filters?: Filters) => {
         [Op.gte]: Number(minAmount),
       }
     }
-    if (maxAmount) {
+    if (maxAmount && Number(maxAmount) > 0) {
       whereClause.amountCents = {
         [Op.lte]: Number(maxAmount),
       }

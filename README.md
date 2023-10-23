@@ -43,14 +43,20 @@ If Next JS/TS is not your stack, that's ok. Apply best patterns from what you ar
 
 ## Submission
 
-Please email code-challenge@getzena.com with a link to your forked submission. Feel free to edit this README.md and explain things like:
+I ran out of time to add more tests, with more time this would have been a high priority to finish. The functionality
+in the app currently is limited, so I felt comfortable testing the app myself, but with future development/additions
+it would become paramount to have a solid testing solution. For my preference I lean more on integration and end-to-end tests than unit tests, but unit tests are still useful (especially for utils and custom hooks)
 
-- what you did include and why
+Additionally, there are several things in the app that could be improved with more time:
 
-- what you didn't include and why
-  tests?
-- what you would add with more time
-  better state mgmt
-  better filter customization
-  method to get filter options
-  get rid of 0 in input placeholder
+### Better state management
+
+Currently using only useState and passing down via props. This is not problematic for the size and complexity of the app, but I could see this quickly getting unmanageable in it's current state as more components are added and the state becomes more complicated. Moving some pieces of state into context and injecting could be useful to prevent prop drilling. There may also be a need to implement useReducer or even bring in a 3rd party management solution like RTK to better manage.
+
+### Better filter component
+
+I opted to have one filter component that could return a select or an input. Some of the structure of this may be too hard-coded (such as the usage of number for the input type) to be flexible enough for future filters. This components could use some addtional logic, or even split into SelectFilter and InputFilter components to separate the logic.
+
+### Reset All Filters
+
+A button to clear all current filters would be useful for users rather than requiring them to manually set each one back to blank.

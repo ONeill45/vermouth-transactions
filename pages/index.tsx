@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { Filter, TransactionCard } from '../components'
 import { Filters, Transaction, TransactionStatus } from '../types'
 
@@ -24,20 +24,26 @@ const Home: NextPage = () => {
     setTransactions(data)
   }
 
+  // separately pull the card and merchant options so they don't change as
+  // transactions are filtered
+  const getFilterOptions = async () => {
+    const response = await fetch('/api/transactions')
+    const data = (await response.json()) as Transaction[]
+    setCardOptions([
+      ...new Set(data.map((transaction) => transaction.cardLast4Digits)),
+    ])
+    setMerchantOptions([
+      ...new Set(data.map((transaction) => transaction.merchantName)),
+    ])
+  }
+
   useEffect(() => {
     fetchTransactions()
   }, [filters])
 
   useEffect(() => {
-    setCardOptions([
-      ...new Set(
-        transactions.map((transaction) => transaction.cardLast4Digits)
-      ),
-    ])
-    setMerchantOptions([
-      ...new Set(transactions.map((transaction) => transaction.merchantName)),
-    ])
-  }, [transactions])
+    getFilterOptions()
+  }, [])
 
   const handleFilters = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>

@@ -1,22 +1,35 @@
 import Image from 'next/image'
 
 import CardIcon from '../components/icons/card.svg'
-import { Transaction, TransactionType } from '../types'
+import { Transaction, TransactionStatus, TransactionType } from '../types'
 import { formatDateTime, formatDollarsAndCents } from '../utils'
 
 interface TransactionCardProps {
   transaction: Transaction
 }
 export const TransactionCard = ({ transaction }: TransactionCardProps) => {
-  const { amountCents, cardLast4Digits, createdAt, description, direction } =
-    transaction
+  const {
+    amountCents,
+    cardLast4Digits,
+    createdAt,
+    description,
+    direction,
+    status,
+  } = transaction
   const formattedPrice = `${
     direction === TransactionType.CREDIT ? '-' : ''
   }${formatDollarsAndCents(amountCents)}`
   return (
     <div className="px-8 py-8 rounded-md text-black-900 bg-card shadow-lg flex justify-between">
       <div className="flex flex-col basis-1/3">
-        <div className="text-2xl">{description}</div>
+        <div className="flex flex-row">
+          <div className="text-2xl">{description}</div>
+          {status === TransactionStatus.PENDING && (
+            <div className="w-20 bg-[#FFF7AB] rounded-xl flex items-center justify-center ml-8 text-xs border border-[#B7B7B7]">
+              {TransactionStatus.PENDING.toLocaleUpperCase()}
+            </div>
+          )}
+        </div>
         <span className="text-base italic text-date">
           {formatDateTime(createdAt)}
         </span>

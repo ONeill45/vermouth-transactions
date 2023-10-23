@@ -16,18 +16,12 @@ export const Filter = ({
   value,
   setValue,
 }: FilterProps) => {
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    //if(!e.target.value)
-    // TODO: Finish handling change in value
-  }
   if (filterType === 'select') {
     return (
       <div className="flex flex-col">
         <div className="font-bold text-[#444] text-xs">{title}</div>
         <select
-          className="w-24 h-6 bg-[#EFEFEF] border-2 border-[#898989] rounded"
+          className="w-24 h-6 bg-[#EFEFEF] border border-[#898989] rounded"
           value={value}
           onChange={(e: ChangeEvent<HTMLSelectElement>) => setValue(e)}
           name={field}
@@ -48,7 +42,7 @@ export const Filter = ({
     return (
       <div className="flex flex-col">
         <div className="font-bold text-[#444] text-xs">{title}</div>
-        <div className="w-24 h-6 bg-[#EFEFEF] border-2 border-[#898989] rounded flex items-center">
+        <div className="w-24 h-6 bg-[#EFEFEF] border border-[#898989] rounded flex items-center">
           <div className="w-4 h-6">$</div>
           <input
             className="w-20 h-6 transparent-input"
