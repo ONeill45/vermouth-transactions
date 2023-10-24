@@ -46,10 +46,9 @@ export const insertTransaction = async (transaction: Transaction) => {
 
 export const selectTransactions = async (filters?: Filters) => {
   let whereClause: any = {}
-  console.log(filters)
   if (filters) {
     const { minAmount, maxAmount, card, merchant, status } = filters
-    console.log(minAmount)
+
     if (minAmount) {
       whereClause.amountCents = {
         [Op.gte]: Number(minAmount),
@@ -77,7 +76,6 @@ export const selectTransactions = async (filters?: Filters) => {
     }
   }
 
-  console.log(whereClause)
   return await TransactionTable.findAll({
     order: ['createdAt'],
     where: whereClause,
