@@ -16,6 +16,7 @@ export type Transaction = {
   cardLast4Digits: string
   createdAt: string
   direction: TransactionType
+  memo: string
 }
 
 export type Filters = {

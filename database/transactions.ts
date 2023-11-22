@@ -25,6 +25,7 @@ export const setupDb = async (): Promise<void> => {
     cardLast4Digits: DataTypes.STRING,
     createdAt: DataTypes.DATE,
     direction: DataTypes.STRING,
+    memo: DataTypes.STRING,
   })
 
   await TransactionTable.sync()
@@ -48,7 +49,6 @@ export const selectTransactions = async (filters?: Filters) => {
   let whereClause: any = {}
   if (filters) {
     const { minAmount, maxAmount, card, merchant, status } = filters
-
     if (minAmount) {
       whereClause.amountCents = {
         [Op.gte]: Number(minAmount),

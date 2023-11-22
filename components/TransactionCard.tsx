@@ -1,3 +1,4 @@
+import { ChangeEvent, useState } from 'react'
 import Image from 'next/image'
 
 import CardIcon from '../components/icons/card.svg'
@@ -19,6 +20,13 @@ export const TransactionCard = ({ transaction }: TransactionCardProps) => {
   const formattedPrice = `${
     direction === TransactionType.CREDIT ? '-' : ''
   }${formatDollarsAndCents(amountCents)}`
+
+  const [memo, setMemo] = useState<string>('')
+
+  const handleMemoChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+    setMemo(value)
+  }
   return (
     <div className="px-8 py-8 rounded-md text-black-900 bg-card shadow-lg flex justify-between">
       <div className="flex flex-col basis-1/3">
@@ -33,6 +41,7 @@ export const TransactionCard = ({ transaction }: TransactionCardProps) => {
         <span className="text-base italic text-date">
           {formatDateTime(createdAt)}
         </span>
+        <input value={memo} onChange={handleMemoChange} />
       </div>
       <div className="flex flex-row justify-around items-center basis-1/3">
         <div className="flex flex-row items-center">
